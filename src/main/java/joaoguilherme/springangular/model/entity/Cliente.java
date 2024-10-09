@@ -1,10 +1,12 @@
 package joaoguilherme.springangular.model.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
+@Data
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +15,7 @@ public class Cliente {
     private String nome;
     @Column(nullable = false, length = 11)
     private String cpf;
-    @Column
+    @Column(name = "data_cadastro")
     private LocalDate dataCadastro;
+
 }
