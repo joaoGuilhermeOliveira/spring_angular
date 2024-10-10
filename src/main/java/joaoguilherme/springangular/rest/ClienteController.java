@@ -1,5 +1,6 @@
 package joaoguilherme.springangular.rest;
 
+import jakarta.validation.Valid;
 import joaoguilherme.springangular.model.entity.Cliente;
 import joaoguilherme.springangular.model.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,13 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente salvar (@RequestBody Cliente cliente) {
+    public Cliente salvar (@RequestBody @Valid Cliente cliente) {
         return repository.save(cliente);
     }
 
     @GetMapping("{id}")
     public Cliente buscarPorId(@PathVariable Integer id) {
-        return repository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return repository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
     }
 
     @DeleteMapping("{id}")
@@ -37,7 +38,7 @@ public class ClienteController {
                 .map( cliente -> {
                     repository.delete(cliente);
                     return Void.TYPE;
-                }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
     }
 
     @PutMapping("{id}")
@@ -48,7 +49,7 @@ public class ClienteController {
                 .map( cliente -> {
                     clienteAtualizado.setId(cliente.getId());
                     return repository.save(clienteAtualizado);
-                }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
     }
 
 }
