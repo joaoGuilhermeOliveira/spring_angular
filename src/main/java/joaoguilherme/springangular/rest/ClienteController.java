@@ -1,5 +1,6 @@
 package joaoguilherme.springangular.rest;
 
+import jakarta.validation.Valid;
 import joaoguilherme.springangular.model.entity.Cliente;
 import joaoguilherme.springangular.model.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente salvar (@RequestBody Cliente cliente) {
+    public Cliente salvar (@RequestBody @Valid Cliente cliente) {
         return repository.save(cliente);
     }
 
